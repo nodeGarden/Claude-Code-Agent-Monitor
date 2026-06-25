@@ -150,7 +150,7 @@ export function Workflows() {
       {/* Stats Row */}
       <WorkflowStats stats={data.stats} />
 
-      {/* Workflow-tool runs (issue #167) — fleets ingested from on-disk journals */}
+      {/* Workflow-tool runs (issue #167) - fleets ingested from on-disk journals */}
       <div className="card p-4 space-y-3">
         <div>
           <h2 className="text-sm font-semibold text-gray-200 flex items-center gap-2">
@@ -311,21 +311,29 @@ function Section({
   number: number;
   title: string;
   subtitle: string;
-  /** Key under workflows.chartInfo.* — drives the structured popover content. */
+  /** Key under workflows.chartInfo.* - drives the structured popover content. */
   infoKey: string;
   children: React.ReactNode;
 }) {
   return (
     <div>
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2.5">
-          <span className="w-5 h-5 rounded-md bg-accent/15 text-accent text-[11px] font-bold flex items-center justify-center">
+      <div className="flex items-center justify-between gap-4 mb-3">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <span className="w-5 h-5 rounded-md bg-accent/15 text-accent text-[11px] font-bold flex items-center justify-center flex-shrink-0">
             {number}
           </span>
           <h2 className="text-sm font-semibold text-gray-100">{title}</h2>
           <ChartInfoPopover infoKey={infoKey} title={title} />
         </div>
-        <span className="text-[11px] text-gray-600 hidden lg:block">{subtitle}</span>
+        {/* Quick descriptor; the full explanation lives in the ⓘ popover, so we
+            keep this to a single clamped line (ellipsis + hover title) so a long
+            translation never wraps and unbalances the header row. */}
+        <span
+          className="hidden lg:block flex-shrink-0 max-w-[20rem] xl:max-w-sm truncate text-right text-[11px] text-gray-600"
+          title={subtitle}
+        >
+          {subtitle}
+        </span>
       </div>
       <div className="card p-4">{children}</div>
     </div>
@@ -336,9 +344,9 @@ function Section({
  * Structured info popover for a Workflows chart section. Hover or focus the
  * `i` icon to read three short paragraphs sourced from i18n:
  *
- *   1. What this shows  — what data the chart visualizes
- *   2. How to read it   — visual encoding (axes, sizes, colors, etc.)
- *   3. Why it matters   — what insights the user can extract
+ *   1. What this shows  - what data the chart visualizes
+ *   2. How to read it   - visual encoding (axes, sizes, colors, etc.)
+ *   3. Why it matters   - what insights the user can extract
  *
  * The popover uses fixed positioning and is clamped to the viewport so it
  * never gets clipped by the sidebar or screen edges. Auto-flips above the
